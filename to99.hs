@@ -46,12 +46,12 @@ isPalindrome x = x == myReverse x
 
 -- problem 7
 
--- data NestedList a = Elem a | List [NestedList a]
+data NestedList a = Elem a | List [NestedList a]
 
--- flatten :: NestedList a -> [a]
--- flatten (List []) = []
--- flatten (Elem x) = x
--- flatten (List (x : xs)) = (flatten x) ++ (flatten (List xs))
+flatten :: NestedList a -> [a]
+flatten (List []) = []
+flatten (Elem x) = [x]
+flatten (List (x : xs)) = (flatten x) ++ (flatten (List xs))
 
 -- problem 8
 
