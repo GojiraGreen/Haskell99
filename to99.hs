@@ -46,19 +46,24 @@ isPalindrome x = x == myReverse x
 
 -- problem 7
 
-data NestedList a = Elem a | List [NestedList a]
+-- data NestedList a = Elem a | List [NestedList a]
 
-flatten :: NestedList a -> [a]
-flatten (List []) = []
-flatten (Elem x) = x
-flatten (List (x : xs)) = (flatten x) ++ (flatten (List xs))
+-- flatten :: NestedList a -> [a]
+-- flatten (List []) = []
+-- flatten (Elem x) = x
+-- flatten (List (x : xs)) = (flatten x) ++ (flatten (List xs))
 
 -- problem 8
 
---compress :: Eq a => [a] -> [a]
+consists [] z = False
+consists (x:xs) z
+    | x == z = True
+    | otherwise = consists xs z
+
+compress :: Eq a => [a] -> [a]
 compress x = compress' [] x
 
---compress' :: Eq a => [a] -> [a] -> [a]
+compress' :: Eq a => [a] -> [a] -> [a]
 compress' r [] = r
 compress' z (x : xs)
     | z `consists` x = compress' z xs
@@ -90,3 +95,19 @@ compressUnit v (x:xs)
 
 encode x =  encode' (pack x)
 encode' x = map (\ n -> (length n, head n)) x
+
+-- problem 11
+
+data MyEncode a = Single a | Multiple Int a
+    deriving (Show)
+
+myFilter :: Eq a => [a] -> MyEncode a
+myFilter x
+    | length x == 1 = Single (head x)
+    | otherwise = Multiple (length x) (head x)
+
+encodeMdified ::  Eq a => [a] -> [MyEncode a]
+encodeMdified x =  encodeMdified' (pack x)
+
+encodeMdified' ::  Eq a => [[a]] -> [MyEncode a]
+encodeMdified' x = map (\ n -> myFilter n) x
