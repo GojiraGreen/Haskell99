@@ -111,3 +111,16 @@ encodeMdified x =  encodeMdified' (pack x)
 
 encodeMdified' ::  Eq a => [[a]] -> [MyEncode a]
 encodeMdified' x = map (\ n -> myFilter n) x
+
+myFilter2 :: Eq a =>  MyEncode a -> [a]
+myFilter2 (Single x) = [x]
+myFilter2 (Multiple x y) = x `replicate` y
+
+decodeModified ::  Eq a => [MyEncode a] -> [a]
+decodeModified x = concat (decodeModified' x)
+
+decodeModified' ::  Eq a => [MyEncode a] -> [[a]]
+decodeModified' x = map (\ n -> myFilter2 n) x
+
+
+
